@@ -1,0 +1,16 @@
+---
+# tasks file for cowsay
+
+- name: install cowsay
+  package: name=cowsay
+
+- name: hello world
+  shell: "/usr/games/cowsay {{ roar }}"
+  register: cowroar
+
+- debug: msg="{{ cowroar.stdout.split('\n') }}"
+
+- name: save roar to log file
+  copy:
+    dest: /tmp/cowsay.log
+    content: "{{ cowroar.stdout }}"
